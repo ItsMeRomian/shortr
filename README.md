@@ -1,75 +1,43 @@
-# Nuxt 3 Minimal Starter
+# Make long url short
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+nuxt3 + postgres in docker compose  
+this is made for private use and is not meant to serve the public
+![alt text](image.png)
 
-## Setup
+## start
 
-Make sure to install the dependencies:
+`docker compose up -d`
 
-```bash
-# npm
-npm install
+generate tables (needed 1st time):
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+```
+docker exec -it shortr-app bash
+npx prisma db push
 ```
 
-## Development Server
+## endpoints
 
-Start the development server on `http://localhost:3000`:
+### POST `/url`
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```
+{"url":"abi.co","maxReads":0}
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```
+200 [id]
+500 "error"
 ```
 
-Locally preview production build:
+### GET `/api/url?id=[id]`
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+```
+200 [url]
+500 "error"
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### GET `/api/urlinfo?id=[id]`
+
+```
+200 [id, url, ip, ua, maxreads, reads with ip and ua]
+500 "error"
+```
